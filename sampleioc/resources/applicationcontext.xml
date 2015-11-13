@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd">
+        
+        
+        <bean id="examDao" class="com.dao.impl.ExamDaoMysqlImpl" scope="prototype"/>
+        <bean id="examService" class="com.service.impl.ExamServiceImpl" scope="prototype">
+        	<property name="examDao" ref="examDao"></property>
+        </bean>
+        
+        <bean id="technologyService" class="com.service.impl.TechnologyServiceImpl" scope="prototype">
+        	<property name="examDao" ref="examDao"></property>
+        </bean>
+ </beans>
