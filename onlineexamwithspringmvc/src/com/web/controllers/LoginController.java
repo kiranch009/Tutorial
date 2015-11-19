@@ -15,7 +15,7 @@ import com.beans.User;
 import com.services.LoginService;
 
 @Controller
-public class LoginController
+public class LoginController extends BaseController
 {
 
     @Autowired

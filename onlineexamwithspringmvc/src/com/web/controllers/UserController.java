@@ -21,7 +21,7 @@ import com.beans.User;
 import com.web.validators.UserValidator;
 
 @Controller
-public class UserController
+public class UserController extends BaseController
 {
     @Autowired
     private UserValidator userValidator;
@@ -42,6 +42,11 @@ public class UserController
         if (errors.hasErrors())
         {
             return new ModelAndView("user_view");
+        }
+        //Exception handling example
+        if (user.getUserName().equals("error"))
+        {
+            throw new RuntimeException("Error in save");
         }
         System.out.println(user.getUserName());
         System.out.println(user.getLoginId());
