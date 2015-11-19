@@ -10,7 +10,7 @@
 </head>
 <body>
 	<form:form method="post" action="register" modelAttribute="user">
-		<form:errors path="*" />
+		<form:errors path="*"  cssStyle="background: red; width: 250px;"/>
 		<table>
 
 			<tr>
@@ -22,7 +22,7 @@
 				<td><form:input path="userName" /></td>
 			</tr>
 			<tr>
-				<td>Date of birth:</td>
+				<td>Date of birth(dd/MM/yyyy):</td>
 				<td><form:input path="dob" /></td>
 			</tr>
 			<tr>

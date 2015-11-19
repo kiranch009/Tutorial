@@ -23,4 +23,9 @@
 	 
 	<mvc:annotation-driven />
  <context:property-placeholder location="/WEB-INF/messages.properties"/>
+ 
+ <bean class="org.springframework.context.support.ResourceBundleMessageSource"
+		id="messageSource">
+		<property name="basename" value="com/web/validators/validation_error_msgs_en_US" />
+	</bean>
 </beans>

@@ -1,5 +1,6 @@
 package com.beans;
 
+import java.util.Date;
 
 public class User
 {
@@ -10,7 +11,7 @@ public class User
     private String qualification;
     private String emailId;
     private String mobile;
-    private String dob;
+    private Date dob;
     public Integer getUserId()
     {
         return userId;
@@ -70,12 +71,12 @@ public class User
         this.mobile = mobile;
     }
 
-    public String getDob()
+    public Date getDob()
     {
         return dob;
     }
 
-    public void setDob(String dob)
+    public void setDob(Date dob)
     {
         this.dob = dob;
     }
