@@ -26,6 +26,6 @@
  
  <bean class="org.springframework.context.support.ResourceBundleMessageSource"
 		id="messageSource">
-		<property name="basename" value="com/web/validators/validation_error_msgs_en_US" />
+		<property name="basename" value="com/web/validators/validation_error_msgs" />
 	</bean>
 </beans>
