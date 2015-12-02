@@ -1,0 +1,191 @@
+-- MySQL dump 10.13  Distrib 5.6.17, for Win32 (x86)
+--
+-- Host: localhost    Database: online_exam
+-- ------------------------------------------------------
+-- Server version	5.5.42
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `exam_answer`
+--
+
+DROP TABLE IF EXISTS `exam_answer`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `exam_answer` (
+  `answer_id` int(11) NOT NULL AUTO_INCREMENT,
+  `question_id` int(11) NOT NULL,
+  `choice_id` int(11) NOT NULL,
+  PRIMARY KEY (`answer_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `exam_answer`
+--
+
+LOCK TABLES `exam_answer` WRITE;
+/*!40000 ALTER TABLE `exam_answer` DISABLE KEYS */;
+/*!40000 ALTER TABLE `exam_answer` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `exam_answer_choice`
+--
+
+DROP TABLE IF EXISTS `exam_answer_choice`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `exam_answer_choice` (
+  `choice_id` int(11) NOT NULL AUTO_INCREMENT,
+  `question_id` int(11) NOT NULL,
+  `answer_choice` varchar(500) NOT NULL,
+  PRIMARY KEY (`choice_id`),
+  KEY `question_answer_choice_idx` (`question_id`),
+  CONSTRAINT `question_answer_choice` FOREIGN KEY (`question_id`) REFERENCES `exam_question` (`question_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `exam_answer_choice`
+--
+
+LOCK TABLES `exam_answer_choice` WRITE;
+/*!40000 ALTER TABLE `exam_answer_choice` DISABLE KEYS */;
+INSERT INTO `exam_answer_choice` VALUES (1,1,'char()'),(2,1,'Charat()'),(3,1,'charat()'),(4,1,'charAt()'),(5,2,'upper'),(6,2,'super'),(7,2,'this'),(8,2,'None of the mentioned');
+/*!40000 ALTER TABLE `exam_answer_choice` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `exam_question`
+--
+
+DROP TABLE IF EXISTS `exam_question`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `exam_question` (
+  `question_id` int(11) NOT NULL AUTO_INCREMENT,
+  `technlogy_id` int(11) DEFAULT NULL,
+  `question` varchar(1000) DEFAULT NULL,
+  PRIMARY KEY (`question_id`),
+  KEY `technology_question_idx` (`technlogy_id`),
+  CONSTRAINT `technology_question` FOREIGN KEY (`technlogy_id`) REFERENCES `technology` (`technology_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `exam_question`
+--
+
+LOCK TABLES `exam_question` WRITE;
+/*!40000 ALTER TABLE `exam_question` DISABLE KEYS */;
+INSERT INTO `exam_question` VALUES (1,2,'Which of these method of String class is used to obtain character at specified index?'),(2,2,'Which of these keywords is used to refer to member of base class from a sub class?');
+/*!40000 ALTER TABLE `exam_question` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `technology`
+--
+
+DROP TABLE IF EXISTS `technology`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `technology` (
+  `technology_id` int(11) NOT NULL AUTO_INCREMENT,
+  `technology_name` varchar(45) NOT NULL,
+  PRIMARY KEY (`technology_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `technology`
+--
+
+LOCK TABLES `technology` WRITE;
+/*!40000 ALTER TABLE `technology` DISABLE KEYS */;
+INSERT INTO `technology` VALUES (1,'C++'),(2,'Java');
+/*!40000 ALTER TABLE `technology` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `user`
+--
+
+DROP TABLE IF EXISTS `user`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `user` (
+  `user_id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_name` varchar(45) NOT NULL,
+  `login_id` varchar(45) NOT NULL,
+  `login_password` varchar(15) NOT NULL,
+  `qualification` varchar(15) DEFAULT NULL,
+  `email_id` varchar(45) NOT NULL,
+  `mobile` varchar(10) NOT NULL,
+  `permanent_address` int(11) DEFAULT NULL,
+  `mailing_address` int(11) DEFAULT NULL,
+  `dob` date DEFAULT NULL,
+  PRIMARY KEY (`user_id`),
+  KEY `user_permaddress_idx` (`permanent_address`),
+  KEY `user_mailaddress_idx` (`mailing_address`),
+  CONSTRAINT `user_mailaddress` FOREIGN KEY (`mailing_address`) REFERENCES `user_address` (`address_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `user_permaddress` FOREIGN KEY (`permanent_address`) REFERENCES `user_address` (`address_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `user`
+--
+
+LOCK TABLES `user` WRITE;
+/*!40000 ALTER TABLE `user` DISABLE KEYS */;
+/*!40000 ALTER TABLE `user` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `user_address`
+--
+
+DROP TABLE IF EXISTS `user_address`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `user_address` (
+  `address_id` int(11) NOT NULL AUTO_INCREMENT,
+  `address1` varchar(500) DEFAULT NULL,
+  `address2` varchar(500) DEFAULT NULL,
+  `city` varchar(45) DEFAULT NULL,
+  `state` varchar(45) DEFAULT NULL,
+  `zip` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`address_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `user_address`
+--
+
+LOCK TABLES `user_address` WRITE;
+/*!40000 ALTER TABLE `user_address` DISABLE KEYS */;
+/*!40000 ALTER TABLE `user_address` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2015-12-02 16:06:32
