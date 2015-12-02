@@ -8,10 +8,10 @@
             <column name="user_id" />
             <generator class="identity" />
         </id>
-        <many-to-one name="userAddressByMailingAddress" class="com.beans.UserAddress" fetch="select">
+        <many-to-one name="userAddressByMailingAddress" class="com.beans.UserAddress" fetch="join" cascade="all" lazy="false">
             <column name="mailing_address" />
         </many-to-one>
-        <many-to-one name="userAddressByPermanentAddress" class="com.beans.UserAddress" fetch="select">
+        <many-to-one name="userAddressByPermanentAddress" class="com.beans.UserAddress" fetch="join" cascade="all" lazy="false">
             <column name="permanent_address" />
         </many-to-one>
         <property name="userName" type="string">

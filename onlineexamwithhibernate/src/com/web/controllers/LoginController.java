@@ -34,7 +34,8 @@ public class LoginController extends BaseController
         ModelAndView modelAndView = null;
         env.getProperty("login.failed");
 
-        User user = loginService.getUser(userName, password);
+        User user = null;
+        //                loginService.getUser(userName, password);
         if (user != null)
         {
             modelAndView = new ModelAndView("home_view");

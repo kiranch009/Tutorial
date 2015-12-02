@@ -9,7 +9,7 @@ public class ExamAnswerChoice implements java.io.Serializable
 {
 
     private Integer choiceId;
-    private ExamQuestions examQuestions;
+    private ExamQuestion examQuestion;
     private String answerChoice;
 
 
@@ -23,14 +23,14 @@ public class ExamAnswerChoice implements java.io.Serializable
         this.choiceId = choiceId;
     }
 
-    public ExamQuestions getExamQuestions()
+    public ExamQuestion getExamQuestion()
     {
-        return this.examQuestions;
+        return examQuestion;
     }
 
-    public void setExamQuestions(ExamQuestions examQuestions)
+    public void setExamQuestion(ExamQuestion examQuestion)
     {
-        this.examQuestions = examQuestions;
+        this.examQuestion = examQuestion;
     }
 
     public String getAnswerChoice()

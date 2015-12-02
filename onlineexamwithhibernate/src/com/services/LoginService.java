@@ -1,8 +1,10 @@
 package com.services;
 
+import java.util.List;
+
 import com.beans.User;
 
 public interface LoginService
 {
-    public User getUser(String userName, String password);
+    public List<User> getUser(String userName, String password);
 }

@@ -1,4 +1,4 @@
-package com.beans;
+package com.dto;
 
 import java.util.Map;
 

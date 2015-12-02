@@ -36,9 +36,9 @@
 
 		<property name="mappingResources">
 			<list>
-				<value>com/beans/ExamQuestions.hbm.xml</value>
+				<value>com/beans/ExamQuestion.hbm.xml</value>
 				<value>com/beans/User.hbm.xml</value>
-				<value>com/beans/Technologies.hbm.xml</value>
+				<value>com/beans/Technology.hbm.xml</value>
 				<value>com/beans/ExamAnswerChoice.hbm.xml</value>
 				<value>com/beans/UserAddress.hbm.xml</value>
 				<value>com/beans/ExamAnswer.hbm.xml</value>

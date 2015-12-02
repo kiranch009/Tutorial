@@ -1,13 +1,13 @@
 package com.dao;
 
 import java.util.List;
-import java.util.Map;
 
-import com.beans.QuestionBean;
+import com.beans.ExamQuestion;
+import com.beans.Technology;
 
 public interface ExamDao
 {
-    public Map<Integer, String> getAvailableTechnologies();
+    public List<Technology> getAvailableTechnologies();
 
-    public List<QuestionBean> getQuestions(Integer technologyId);
+    public List<ExamQuestion> getQuestions(Integer technologyId);
 }

@@ -3,7 +3,7 @@
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <!-- Generated Nov 24, 2015 2:08:32 PM by Hibernate Tools 4.0.0 -->
 <hibernate-mapping>
-    <class name="com.beans.Technologies" table="technologies" catalog="online_exam">
+    <class name="com.beans.Technology" table="technology" catalog="online_exam">
         <id name="technologyId" type="java.lang.Integer">
             <column name="technology_id" />
             <generator class="identity" />
@@ -11,11 +11,11 @@
         <property name="technologyName" type="string">
             <column name="technology_name" length="45" not-null="true" />
         </property>
-        <set name="examQuestionses" table="exam_questions" inverse="true" lazy="true" fetch="select">
+        <set name="examQuestions" table="exam_question" inverse="true" lazy="false" batch-size="1">
             <key>
                 <column name="technlogy_id" />
             </key>
-            <one-to-many class="com.beans.ExamQuestions" />
+            <one-to-many class="com.beans.ExamQuestion" />
         </set>
     </class>
 </hibernate-mapping>

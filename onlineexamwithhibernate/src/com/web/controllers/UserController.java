@@ -19,6 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.beans.User;
 import com.dto.UserDto;
+import com.services.UserService;
 import com.web.validators.UserValidator;
 
 @Controller
@@ -26,6 +27,9 @@ public class UserController extends BaseController
 {
     @Autowired
     private UserValidator userValidator;
+
+    @Autowired
+    private UserService userService;
 
     @RequestMapping(value = "/register", method = RequestMethod.GET)
     public ModelAndView getRegistrationForm()
@@ -56,7 +60,9 @@ public class UserController extends BaseController
         System.out.println(user.getQualification());
         System.out.println(user.getEmailId());
         System.out.println(user.getMobile());
-        request.getSession().setAttribute("USER", user);
+        //        request.getSession().setAttribute("USER", user);
+
+        userService.saveUser(user);
         return new ModelAndView("home_view");
     }
 

@@ -3,12 +3,12 @@
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <!-- Generated Nov 24, 2015 2:08:32 PM by Hibernate Tools 4.0.0 -->
 <hibernate-mapping>
-    <class name="com.beans.ExamQuestions" table="exam_questions" catalog="online_exam">
+    <class name="com.beans.ExamQuestion" table="exam_question" catalog="online_exam">
         <id name="questionId" type="java.lang.Integer">
             <column name="question_id" />
             <generator class="identity" />
         </id>
-        <many-to-one name="technologies" class="com.beans.Technologies" fetch="select">
+        <many-to-one name="technology" class="com.beans.Technology" fetch="select">
             <column name="technlogy_id" />
         </many-to-one>
         <property name="question" type="string">

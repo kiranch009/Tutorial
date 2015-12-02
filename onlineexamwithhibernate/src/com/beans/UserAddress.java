@@ -1,5 +1,6 @@
 package com.beans;
 
+
 // Generated Nov 24, 2015 2:08:31 PM by Hibernate Tools 4.0.0
 
 

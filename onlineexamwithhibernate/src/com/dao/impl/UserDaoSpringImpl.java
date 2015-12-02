@@ -1,7 +1,7 @@
 package com.dao.impl;
 
-import org.hibernate.SessionFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+import java.util.List;
+
 import org.springframework.stereotype.Repository;
 
 import com.beans.User;
@@ -12,19 +12,28 @@ import com.dao.UserDao;
 public class UserDaoSpringImpl extends BaseDao implements UserDao
 {
 
-    @Autowired
-    private SessionFactory sessionFactory;
+
 
     @Override
-    public User getUser(String userName, String password)
+    public List<User> getUser(String userName, String password)
     {
-        return null;
+
+        String query = "SELECT u from User u WHERE u.loginId=? and u.loginPassword=?";
+
+        List<User> list = (List<User>) getHibernateTemplate().find(query, userName, password);
+        for (User user : list)
+        {
+            System.out.println(user.getUserAddressByMailingAddress().getState());
+            System.out.println(user.getUserAddressByPermanentAddress().getState());
+        }
+
+        return list;
     }
 
     @Override
     public void saveUser(User user)
     {
-        System.out.println(user);
+        getHibernateTemplate().save(user);
 
     }
 

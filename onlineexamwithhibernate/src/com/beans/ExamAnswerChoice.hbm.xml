@@ -8,7 +8,7 @@
             <column name="choice_id" />
             <generator class="identity" />
         </id>
-        <many-to-one name="examQuestions" class="com.beans.ExamQuestions" fetch="select">
+        <many-to-one name="examQuestion" class="com.beans.ExamQuestion" fetch="select">
             <column name="question_id" not-null="true" />
         </many-to-one>
         <property name="answerChoice" type="string">

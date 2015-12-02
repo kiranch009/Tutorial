@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.beans.QuestionBean;
+import com.dto.QuestionBean;
 import com.services.ExamService;
 import com.services.impl.ExamServiceImpl;
 
@@ -26,7 +26,8 @@ public class StartExamServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         ExamService service = new ExamServiceImpl();
-        List<QuestionBean> list = service.getQuestions(Integer.parseInt(request.getParameter("technology")));
+        List<QuestionBean> list = null;
+        //        List<QuestionBean> list = service.getQuestions(Integer.parseInt(request.getParameter("technology")));
         request.setAttribute("QUESTION_LIST", list);
         request.getRequestDispatcher("/jsp/startexam_view.jsp").forward(request, response);
 	}

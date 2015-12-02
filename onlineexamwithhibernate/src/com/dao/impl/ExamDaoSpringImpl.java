@@ -1,26 +1,42 @@
 package com.dao.impl;
 
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.stereotype.Repository;
 
-import com.beans.QuestionBean;
+import com.beans.ExamQuestion;
+import com.beans.Technology;
 import com.dao.ExamDao;
 
 @Repository("examDao")
 public class ExamDaoSpringImpl extends BaseDao implements ExamDao
 {
     @Override
-    public Map<Integer, String> getAvailableTechnologies()
+    public List<Technology> getAvailableTechnologies()
     {
-        return null;
+        List<Technology> list = getHibernateTemplate().loadAll(Technology.class);
+        System.out.println("Technologies size:" + list.size());
+        for (Technology technology : list)
+        {
+            System.out.println("No.of questions in " + technology.getTechnologyName() + ":" +
+                               technology.getExamQuestions().size());
+        }
+        return list;
     }
 
     @Override
-    public List<QuestionBean> getQuestions(Integer technologyId)
+    public List<ExamQuestion> getQuestions(Integer technologyId)
     {
-        return null;
+        String query = "Select q from ExamQuestion q where q.technology.technologyId=?";
+        @SuppressWarnings("unchecked")
+        List<ExamQuestion> list = (List<ExamQuestion>) getHibernateTemplate().find(query, technologyId);
+
+        for (ExamQuestion question : list)
+        {
+            System.out.println("number of choices to :" + question.getQuestionId() + " are: " +
+                               question.getExamAnswerChoices().size());
+        }
+        return list;
     }
 
 }

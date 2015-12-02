@@ -31,7 +31,8 @@ public class LoginServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         LoginService loginService = new LoginServiceImpl();
 
-        User user = loginService.getUser(request.getParameter("userName"), request.getParameter("password"));
+        User user = null;
+        //                loginService.getUser(request.getParameter("userName"), request.getParameter("password"));
         if (user == null)
         {
             request.setAttribute(Constants.LOGIN_FAILED_KEY, "login failed");
