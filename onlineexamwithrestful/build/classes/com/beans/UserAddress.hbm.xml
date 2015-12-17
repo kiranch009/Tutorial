@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Nov 24, 2015 2:08:32 PM by Hibernate Tools 4.0.0 -->
+<hibernate-mapping>
+    <class name="com.beans.UserAddress" table="user_address" catalog="online_exam">
+        <id name="addressId" type="java.lang.Integer">
+            <column name="address_id" />
+            <generator class="identity" />
+        </id>
+        <property name="address1" type="string">
+            <column name="address1" length="500" />
+        </property>
+        <property name="address2" type="string">
+            <column name="address2" length="500" />
+        </property>
+        <property name="city" type="string">
+            <column name="city" length="45" />
+        </property>
+        <property name="state" type="string">
+            <column name="state" length="45" />
+        </property>
+        <property name="zip" type="string">
+            <column name="zip" length="45" />
+        </property>
+    </class>
+</hibernate-mapping>

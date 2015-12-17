@@ -19,7 +19,7 @@ public class ExamServiceTest
     @Autowired
     private ExamService examService;
 
-    //    @Test
+    @Test
     public void getQuestionsTest()
     {
         List<ExamQuestion> list = examService.getQuestions(2);
