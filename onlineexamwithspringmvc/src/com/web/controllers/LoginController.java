@@ -15,34 +15,31 @@ import com.beans.User;
 import com.services.LoginService;
 
 @Controller
-public class LoginController extends BaseController
-{
+public class LoginController extends BaseController {
 
-    @Autowired
-    private LoginService loginService;
+	@Autowired
+	private LoginService loginService;
 
-    @Value("${login.failed}")
-    private String loginFailedmsg;
+	@Value("${login.failed}")
+	private String loginFailedmsg;
 
-    @Autowired
-    private Environment env;
+	@Autowired
+	private Environment env;
 
-    @RequestMapping(value = "/home", method = RequestMethod.POST)
-    public ModelAndView authenticateUser(HttpServletRequest request, @RequestParam String userName,
-            @RequestParam String password)
-    {
-        ModelAndView modelAndView = null;
-        env.getProperty("login.failed");
+	@RequestMapping(value = "/home", method = RequestMethod.POST)
+	public ModelAndView authenticateUser(HttpServletRequest request,
+			@RequestParam String userName, @RequestParam String password) {
+		ModelAndView modelAndView = null;
+		env.getProperty("login.failed");
 
-        User user = loginService.getUser(userName, password);
-        if (user != null)
-        {
-            modelAndView = new ModelAndView("home_view");
-        } else
-        {
-            modelAndView = new ModelAndView("index_view");
-            request.setAttribute("loginError", loginFailedmsg);
-        }
-        return modelAndView;
-    }
+		User user = loginService.getUser(userName, password);
+		if (user != null) {
+			request.getSession().setAttribute("USER", user);
+			modelAndView = new ModelAndView("home_view");
+		} else {
+			modelAndView = new ModelAndView("index_view");
+			request.setAttribute("loginError", loginFailedmsg);
+		}
+		return modelAndView;
+	}
 }

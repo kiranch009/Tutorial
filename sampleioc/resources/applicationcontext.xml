@@ -5,12 +5,24 @@
         http://www.springframework.org/schema/beans/spring-beans.xsd">
         
         
-        <bean id="examDao" class="com.dao.impl.ExamDaoMysqlImpl" scope="prototype"/>
+        <bean id="examDao" class="com.dao.impl.ExamDaoMysqlImpl" scope="singleton"/>
+        
         <bean id="examService" class="com.service.impl.ExamServiceImpl" scope="prototype">
-        	<property name="examDao" ref="examDao"></property>
+        	<constructor-arg name="examDao" ref="examDao" index="1"></constructor-arg>
+        	<constructor-arg name="type" value="abc" index="2"></constructor-arg>
+        	<constructor-arg name="name" value="xyz" index="3" type="String"></constructor-arg>
         </bean>
+        ExamDao examDao=new ExamServiceImpl(examDao);
         
         <bean id="technologyService" class="com.service.impl.TechnologyServiceImpl" scope="prototype">
         	<property name="examDao" ref="examDao"></property>
         </bean>
+        <bean id="accountFactory" class="AccountFactory">
+        
+        <bean id="account" factory-bean="accountFactory" factory-method="getAccount" scope="prot">
+        	<constructor-arg name="accountType" value="Checking"></constructor-arg>
+        </bean>
+       	 
+        
+        
  </beans>

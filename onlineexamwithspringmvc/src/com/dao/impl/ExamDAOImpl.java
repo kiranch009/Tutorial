@@ -1,7 +1,6 @@
 package com.dao.impl;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -11,113 +10,101 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.sql.DataSource;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.beans.QuestionBean;
-import com.dao.ExamDAO;
+import com.beans.ExamAnswerChoice;
+import com.beans.ExamQuestion;
+import com.beans.Technology;
+import com.dao.ExamDao;
+import com.utils.JDBCUtils;
 
 @Repository
-public class ExamDAOImpl implements ExamDAO
-{
+public class ExamDAOImpl implements ExamDao {
+	
+    @Autowired
+	private DataSource dataSource;
 
-    public static final String SQL_TECHNOLOGIES_LIST = "SELECT * FROM technologies";
+	public static final String SQL_TECHNOLOGIES_LIST = "SELECT * FROM technology";
 
-    public static final String SQL_SELECT_QUESTION =
-            "select * from exam_questions q, exam_answer_choice c where q.question_id=c.question_id and q.technlogy_id=?";
+	public static final String SQL_SELECT_QUESTION = "select * from exam_question q, exam_answer_choice c where q.question_id=c.question_id and q.technlogy_id=?";
 
-    @Override
-    public Map<Integer, String> getAvailableTechnologies()
-    {
+	@Override
+	public List<Technology> getAvailableTechnologies() {
+		Connection conn = null;
+		Statement stmt = null;
+		ResultSet rs = null;
+		try {
+			conn = dataSource.getConnection();
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery(SQL_TECHNOLOGIES_LIST);
+			List<Technology> list = new ArrayList<Technology>();
+			while (rs.next()) {
+				Technology technology = new Technology();
+				technology.setTechnologyId(rs.getInt("technology_id"));
+				technology.setTechnologyName(rs.getString("technology_name"));
+				list.add(technology);
+			}
+			return list;
+		} catch (SQLException ex) {
+			throw new RuntimeException(ex);
+		} finally {
+			JDBCUtils.closeResultSet(rs);
+			JDBCUtils.closeStatement(stmt);
+			JDBCUtils.closeConnection(conn);
+		}
+	}
 
-        Connection conn = null;
-        Statement stmt = null;
-        Map<Integer, String> map = null;
-        try
-        {
-            Class.forName("com.mysql.jdbc.Driver");
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/online_exam", "root", "root");
-            stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery(SQL_TECHNOLOGIES_LIST);
-            map = new HashMap<Integer, String>();
-            while (rs.next())
-            {
-                map.put(rs.getInt("technology_id"), rs.getString("technology_name"));
-            }
+	@Override
+	public List<ExamQuestion> getQuestions(Integer technologyId) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		Map<Integer, ExamQuestion> map = null;
+		try {
+			conn = dataSource.getConnection();
+			pstmt = conn.prepareStatement(SQL_SELECT_QUESTION);
+			pstmt.setInt(1, technologyId);
+			rs = pstmt.executeQuery();
 
-        } catch (ClassNotFoundException e)
-        {
-            e.printStackTrace();
-        } catch (SQLException e)
-        {
-            e.printStackTrace();
-        } finally
-        {
-            try
-            {
-                conn.close();
-            } catch (SQLException e)
-            {
-                e.printStackTrace();
-            }
-        }
-        return map;
+			map = new HashMap<Integer, ExamQuestion>();
+			ExamQuestion bean = null;
+			Integer questionId = null;
+			ExamAnswerChoice choice = null;
+			List<ExamAnswerChoice> examAnswerChoices=null;
+			while (rs.next()) {
+				questionId = rs.getInt(rs.getInt("question_id"));
+				bean = map.get(questionId);
+				if (bean == null) {
+					bean = new ExamQuestion();
+					bean.setQuestionId(questionId);
+					bean.setQuestion(rs.getString("question"));
+					examAnswerChoices=new ArrayList<ExamAnswerChoice>();
+					choice = new ExamAnswerChoice();
+					choice.setChoiceId(rs.getInt("choice_id"));
+					choice.setAnswerChoice(rs.getString("answer_choice"));
+					examAnswerChoices.add(choice);
+					bean.setExamAnswerChoices(examAnswerChoices);
+					map.put(questionId, bean);
+				} else {
+					choice = new ExamAnswerChoice();
+					choice.setChoiceId(rs.getInt("choice_id"));
+					choice.setAnswerChoice(rs.getString("answer_choice"));
+					bean.getExamAnswerChoices().add(choice);
+				}
+			}
 
-    }
+		} catch (SQLException ex) {
+			throw new RuntimeException(ex);
+		} finally {
+			JDBCUtils.closeResultSet(rs);
+			JDBCUtils.closeStatement(pstmt);
+			JDBCUtils.closeConnection(conn);
+		}
 
-    @Override
-    public List<QuestionBean> getQuestions(Integer technologyId)
-    {
-        Connection conn = null;
-        PreparedStatement pstmt = null;
-        Map<Integer, QuestionBean> map = null;
-        try
-        {
-            Class.forName("com.mysql.jdbc.Driver");
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/online_exam", "root", "root");
-            pstmt = conn.prepareStatement(SQL_SELECT_QUESTION);
-            pstmt.setInt(1, technologyId);
-            ResultSet rs = pstmt.executeQuery();
-            map = new HashMap<Integer, QuestionBean>();
-            QuestionBean bean = null;
-            Integer questionId = null;
-            Map<Integer, String> choiceMap = null;
-            while (rs.next())
-            {
-                questionId = rs.getInt(rs.getInt("question_id"));
-                bean = map.get(questionId);
-                if (bean == null)
-                {
-                    bean = new QuestionBean();
-                    bean.setQuestionId(questionId);
-                    bean.setQuestion(rs.getString("question"));
-                    choiceMap = new HashMap<Integer, String>();
-                    choiceMap.put(rs.getInt("choice_id"), rs.getString("answer_choice"));
-                    bean.setAnswerChoices(choiceMap);
-                    map.put(questionId, bean);
-                } else
-                {
-                    bean.getAnswerChoices().put(rs.getInt("choice_id"), rs.getString("answer_choice"));
-                }
-            }
-
-        } catch (ClassNotFoundException e)
-        {
-            e.printStackTrace();
-        } catch (SQLException e)
-        {
-            e.printStackTrace();
-        } finally
-        {
-            try
-            {
-                conn.close();
-            } catch (SQLException e)
-            {
-                e.printStackTrace();
-            }
-        }
-
-        return new ArrayList<QuestionBean>(map.values());
-    }
+		return new ArrayList<ExamQuestion>(map.values());
+	}
 
 }

@@ -1,11 +1,11 @@
-package com.services;
+package com.dao;
 
 import java.util.List;
 
 import com.beans.ExamQuestion;
 import com.beans.Technology;
 
-public interface ExamService
+public interface ExamDao
 {
     public List<Technology> getAvailableTechnologies();
 

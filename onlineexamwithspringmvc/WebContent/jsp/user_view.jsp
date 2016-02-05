@@ -31,7 +31,7 @@
 			</tr>
 			<tr>
 				<td>Password:</td>
-				<td><form:password path="password" /></td>
+				<td><form:password path="loginPassword" /></td>
 			</tr>
 			<tr>
 				<td>Qualification:</td>

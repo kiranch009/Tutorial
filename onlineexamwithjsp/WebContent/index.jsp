@@ -10,7 +10,7 @@
 </head>
 <body>
 
-	<%if (request.getAttribute(Constants.LOGIN_FAILED_KEY) != null) { %>
+	<%if  (request.getAttribute(Constants.LOGIN_FAILED_KEY) != null) { %>
 
 	<h4><%=Messages.getMessage("login.failed")%></h4>
 	<%} %>

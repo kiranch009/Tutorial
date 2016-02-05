@@ -1,28 +1,28 @@
 package com.services.impl;
 
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.beans.QuestionBean;
-import com.dao.ExamDAO;
+import com.beans.ExamQuestion;
+import com.beans.Technology;
+import com.dao.ExamDao;
 import com.services.ExamService;
-
 @Service
 public class ExamServiceImpl implements ExamService
 {
-    @Autowired
-    private ExamDAO examDao;
+	@Autowired
+    private ExamDao examDao;
+    
 
     @Override
-    public Map<Integer, String> getAvailableTechnologies()
+    public List<Technology> getAvailableTechnologies()
     {
         return examDao.getAvailableTechnologies();
     }
 
-    public List<QuestionBean> getQuestions(Integer technologyId)
+    public List<ExamQuestion> getQuestions(Integer technologyId)
     {
         return examDao.getQuestions(technologyId);
     }
