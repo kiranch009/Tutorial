@@ -1,6 +1,6 @@
 package com.beans;
 
-
+/**Bean to hold exam answer details*/
 public class ExamAnswer implements java.io.Serializable
 {
 
