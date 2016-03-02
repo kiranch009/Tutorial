@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Nov 24, 2015 2:08:32 PM by Hibernate Tools 4.0.0 -->
+<hibernate-mapping>
+    <class name="com.beans.Technology" table="technology" catalog="online_exam">
+        <id name="technologyId" type="java.lang.Integer">
+            <column name="technology_id" />
+            <generator class="identity" />
+        </id>
+        <property name="technologyName" type="string">
+            <column name="technology_name" length="45" not-null="true" />
+        </property>
+        <set name="examQuestions" table="exam_question"  inverse="true" lazy="true" batch-size="2">
+            <key>
+                <column name="technlogy_id" />
+            </key>
+            <one-to-many class="com.beans.ExamQuestion" />
+        </set>
+    </class>
+</hibernate-mapping>
