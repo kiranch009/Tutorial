@@ -1,10 +1,7 @@
 package com.dao.impl;
 
 import java.util.List;
-import java.util.Set;
 
-import org.hibernate.Session;
-import org.hibernate.Transaction;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.CollectionUtils;
 
@@ -18,17 +15,13 @@ public class UserDaoSpringImpl extends BaseDao implements UserDao {
 	@Override
 	public User getUser(String userName, String password) {
 		
-		String query = "SELECT u from User u WHERE u.loginId=? and u.loginPassword=?";
-		
+        String query =
+                "select u from User u inner join fetch u.userAddressByMailingAddress WHERE u.loginId=? and u.loginPassword=?";
+
 		@SuppressWarnings("unchecked")
 		List<User> list = (List<User>) getHibernateTemplate().find(query,
 				userName, password);
-		for (User user : list) {
-			System.out
-					.println(user.getUserAddressByMailingAddress().getState());
-			System.out.println(user.getUserAddressByPermanentAddress()
-					.getState());
-		}
+
 		if (CollectionUtils.isEmpty(list)) {
 			return null;
 		} else {
@@ -53,7 +46,6 @@ public class UserDaoSpringImpl extends BaseDao implements UserDao {
 
 		UserAddress userAddress = getHibernateTemplate().get(UserAddress.class,
 				addressId);
-		userAddress.getUsers();
 		return userAddress;
 	}
 

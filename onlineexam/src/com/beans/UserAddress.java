@@ -1,6 +1,5 @@
 package com.beans;
 
-import java.util.Set;
 
 
 // Generated Nov 24, 2015 2:08:31 PM by Hibernate Tools 4.0.0
@@ -18,18 +17,7 @@ public class UserAddress implements java.io.Serializable
     private String city;
     private String state;
     private String zip;
-    private Set<User> users;
     
-    
-
-    public Set<User> getUsers() {
-		return users;
-	}
-
-	public void setUsers(Set<User> users) {
-		this.users = users;
-	}
-
 	public Integer getAddressId()
     {
         return this.addressId;
